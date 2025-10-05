@@ -7,3 +7,6 @@ CAD Files
 
 MATLAB Files
   COA.m   :    MATLAB script that takes a DAPI image, applies a watershed mask, segments, and draws the ellipses, as well as extracts the centroid and orientation values of each ellipse
+
+Protocols
+  Resin Printing Protocol    :     A pdf file containing helpful information, tips, and tricks to designing and resin printing custom molds for stamp fabrication
