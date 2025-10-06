@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[4]:
-
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -36,30 +30,30 @@ def plot_rose(df, output_dir, file_name, bins=36):
     angles_deg = df[1].to_numpy()
     angles_clock_deg = convert_to_clock_frame(angles_deg)
 
-    # Histogram of x-positions
+    # Histogram of x-positions (this part of the code is specific to images of vertical running stripes, and would not apply to other patterns)
     hist_x, bin_edges_x = np.histogram(x_positions, bins=20)
     bin_centers_x = (bin_edges_x[:-1] + bin_edges_x[1:]) / 2
 
-    # KMeans clustering where K = 2 to separate high vs low count bins
+    # KMeans clustering where K = 2 to separate high vs low count bins (this part of the code is specific to images of vertical running stripes, and would not apply to other patterns)
     hist_x_reshaped = hist_x.reshape(-1, 1)
     kmeans = KMeans(n_clusters=2, n_init=10)
     labels = kmeans.fit_predict(hist_x_reshaped)
 
-    # Identify which cluster label corresponds to high counts
+    # Identify which cluster label corresponds to high counts (this part of the code is specific to images of vertical running stripes, and would not apply to other patterns)
     high_label = np.argmax(kmeans.cluster_centers_)
 
-    # Keep bins with high counts only
+    # Keep bins with high counts only (this part of the code is specific to images of vertical running stripes, and would not apply to other patterns)
     keep_bins = [i for i, label in enumerate(labels) if label == high_label]
     keep_mask = np.zeros(len(df), dtype=bool)
 
-    # Assign each data point to a bin, keep if in a high-count bin
+    # Assign each data point to a bin, keep if in a high-count bin (this part of the code is specific to images of vertical running stripes, and would not apply to other patterns)
     for i in keep_bins:
         bin_min = bin_edges_x[i]
         bin_max = bin_edges_x[i + 1]
         in_bin = (x_positions >= bin_min) & (x_positions < bin_max)
         keep_mask |= in_bin
 
-    # Filter data
+    # Filter data (this part of the code is specific to images of vertical running stripes, and would not apply to other patterns)
     df_filtered = df[keep_mask]
     x_positions_filtered = df_filtered[0].astype(float)
     angles_filtered = df_filtered[1].to_numpy()
@@ -84,7 +78,7 @@ def plot_rose(df, output_dir, file_name, bins=36):
 
     fig = plt.figure(figsize=(12, 6))
 
-    # Histogram subplot
+    # Histogram subplot of the x-position (this part of the code is specific to images of vertical running stripes, and would not apply to other patterns)
     ax1 = fig.add_subplot(1, 2, 1)
     shown_labels = set()
     for i in range(len(hist_x)):
@@ -172,159 +166,3 @@ def process_csv_files(csv_paths, output_dir):
 # csv_files = ["data1.csv", "data2.csv", "data3.csv"]
 # zip_file_path = process_csv_files(csv_files, output_directory)
 # print(f"Analysis complete. Results saved and zipped at: {zip_file_path}")
-
-
-# In[5]:
-
-
-# List of filenames
-filenames = ["B2sCon1-Copy1.1_DAPI_extracted.csv", "B2sCon1-Copy1.2_DAPI_extracted.csv", "B2sCon1-Copy1.3_DAPI_extracted.csv"]
-
-# Read each file into a DataFrame and store them in a list
-dataframes = [pd.read_csv(f, skiprows=0, header=None) for f in filenames]
-
-# Concatenate all DataFrames in the list
-Con1 = pd.concat(dataframes, ignore_index=True)
-
-# Save the combined DataFrame to a new CSV file
-Con1.to_csv("B2Con1.csv", index=False)
-
-
-
-filenames = ["B2sCon2-Copy1.1_DAPI_extracted.csv", "B2sCon2-Copy1.2_DAPI_extracted.csv", "B2sCon2-Copy1.3_DAPI_extracted.csv"]
-
-# Read each file into a DataFrame and store them in a list
-dataframes = [pd.read_csv(f, skiprows=0, header=None) for f in filenames]
-
-# Concatenate all DataFrames in the list
-Con2 = pd.concat(dataframes, ignore_index=True)
-
-# Save the combined DataFrame to a new CSV file
-Con2.to_csv("B2Con2.csv", index=False)
-
-
-
-filenames = ["B2sCon3-Copy1.1_DAPI_extracted.csv", "B2sCon3-Copy1.2_DAPI_extracted.csv", "B2sCon3-Copy1.3_DAPI_extracted.csv", "B2sCon3-Copy1.4_DAPI_extracted.csv"]
-
-# Read each file into a DataFrame and store them in a list
-dataframes = [pd.read_csv(f, skiprows=1, header=None) for f in filenames]
-
-# Concatenate all DataFrames in the list
-Con3 = pd.concat(dataframes, ignore_index=True)
-
-# Save the combined DataFrame to a new CSV file
-Con3.to_csv("B2Con3.csv", index=False)
-
-
-
-filenames = ["B2sTre1-Copy1.1B_DAPI_extracted.csv", "B2sTre1-Copy1.2B_DAPI_extracted.csv", "B2sTre1-Copy1.3B_DAPI_extracted.csv"]
-
-# Read each file into a DataFrame and store them in a list
-dataframes = [pd.read_csv(f, skiprows=0, header=None) for f in filenames]
-
-# Concatenate all DataFrames in the list
-Tre1 = pd.concat(dataframes, ignore_index=True)
-
-# Save the combined DataFrame to a new CSV file
-Tre1.to_csv("B2Tre1.csv", index=False)
-
-
-
-filenames = ["B2sTre2-Copy1.1_DAPI_extracted.csv", "B2sTre2-Copy1.2_DAPI_extracted.csv", "B2sTre2-Copy1.3_DAPI_extracted.csv"]
-
-# Read each file into a DataFrame and store them in a list
-dataframes = [pd.read_csv(f, skiprows=0, header=None) for f in filenames]
-
-# Concatenate all DataFrames in the list
-Tre2 = pd.concat(dataframes, ignore_index=True)
-
-# Save the combined DataFrame to a new CSV file
-Tre2.to_csv("B2Tre2.csv", index=False)
-
-
-filenames = ["B2sTre3-Copy1.1_DAPI_extracted.csv", "B2sTre3-Copy1.2_DAPI_extracted.csv", "B2sTre3-Copy1.3_DAPI_extracted.csv"]
-
-# Read each file into a DataFrame and store them in a list
-dataframes = [pd.read_csv(f, skiprows=0, header=None) for f in filenames]
-
-# Concatenate all DataFrames in the list
-Tre3 = pd.concat(dataframes, ignore_index=True)
-
-# Save the combined DataFrame to a new CSV file
-Tre3.to_csv("B2Tre3.csv", index=False)
-
-
-
-filenames = ["B2Con1.csv", "B2Con2.csv", "B2Con3.csv"]
-
-# Read each file into a DataFrame and store them in a list
-dataframes = [pd.read_csv(f) for f in filenames]
-
-# Concatenate all DataFrames in the list
-ConAll = pd.concat(dataframes, ignore_index=True)
-
-# Save the combined DataFrame to a new CSV file
-ConAll.to_csv("B2ConAll.csv", index=False)
-
-
-filenames = ["B2Tre1.csv", "B2Tre2.csv", "B2Tre3.csv"]
-
-# Read each file into a DataFrame and store them in a list
-dataframes = [pd.read_csv(f) for f in filenames]
-
-# Concatenate all DataFrames in the list
-TreAll = pd.concat(dataframes, ignore_index=True)
-
-# Save the combined DataFrame to a new CSV file
-TreAll.to_csv("B2TreAll.csv", index=False)
-
-
-# In[6]:
-
-
-csv_files = [
-    "B2sCon1-Copy1.1_DAPI_extracted.csv",
-    "B2sCon1-Copy1.2_DAPI_extracted.csv",
-    "B2sCon1-Copy1.3_DAPI_extracted.csv",
-    "B2sCon2-Copy1.1_DAPI_extracted.csv",
-    "B2sCon2-Copy1.2_DAPI_extracted.csv",
-    "B2sCon2-Copy1.3_DAPI_extracted.csv",
-    "B2sCon3-Copy1.1_DAPI_extracted.csv",
-    "B2sCon3-Copy1.2_DAPI_extracted.csv",
-    "B2sCon3-Copy1.3_DAPI_extracted.csv",
-    "B2sCon3-Copy1.4_DAPI_extracted.csv",
-    "B2sTre1-Copy1.1_DAPI_extracted.csv",
-    "B2sTre1-Copy1.1B_DAPI_extracted.csv",
-    "B2sTre1-Copy1.2_DAPI_extracted.csv",
-    "B2sTre1-Copy1.2B_DAPI_extracted.csv",
-    "B2sTre1-Copy1.3_DAPI_extracted.csv",
-    "B2sTre1-Copy1.3B_DAPI_extracted.csv",
-    "B2sTre2-Copy1.1_DAPI_extracted.csv",
-    "B2sTre2-Copy1.2_DAPI_extracted.csv",
-    "B2sTre2-Copy1.3_DAPI_extracted.csv",
-    "B2sTre3-Copy1.1_DAPI_extracted.csv",
-    "B2sTre3-Copy1.2_DAPI_extracted.csv",
-    "B2sTre3-Copy1.3_DAPI_extracted.csv",
-    "B2Con1.csv",
-    "B2Con2.csv",
-    "B2Con3.csv",
-    "B2Tre1.csv",
-    "B2Tre2.csv",
-    "B2Tre3.csv",
-    "B2ConAll.csv",
-    "B2TreAll.csv"
-    ]
-
-output_directory = os.path.expanduser("C:/Users/rhomb/Downloads/Fib_Rose_Plots_Batch2_FilteredUpdated")
-
-# Process all images and save results
-zip_file_path = process_csv_files(csv_files, output_directory)
-
-print(f"Analysis complete. Results saved and zipped at: {zip_file_path}")
-
-
-# In[ ]:
-
-
-
-
