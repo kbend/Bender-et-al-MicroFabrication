@@ -1,5 +1,5 @@
 # Bender-et-al-MicroFabrication
-A repository containing the MATLAB code, CAD files, and detailed manufacturing procedures for the SLA micropatterning paper by Bender et al (Hsu Lab)
+A repository containing the MATLAB code, Python scripts, CAD files, and tips for the manufacturing procedures for the SLA micropatterning paper by Bender et al (Hsu Lab)
 
 CAD Files
   Stripes - 200, 400, 600, 800            :    STL file for the striped-patterned mold with stripes of 200um, 400um, 600um, and 800um width, respectively
