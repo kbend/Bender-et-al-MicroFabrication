@@ -1,4 +1,7 @@
-data = readmatrix('RawDataMicroFab.xlsx');
+% --- Step 1: Import Data ---
+data = readmatrix('name of data.xlsx');
+
+% --- Step 2: Download circistat-matlab and add as path link: https://github.com/circstat/circstat-matlab ---
 
 % --- Step 3: Convert from degrees to radians ---
 control = deg2rad(data(:,1));   % first column = control
@@ -18,4 +21,5 @@ group  = [ones(size(control)); 2*ones(size(exp))];  % 1 = control, 2 = experimen
 % --- Step 6: Display results ---
 disp('--- Watson–Williams Test Results ---');
 disp(table);
+
 fprintf('\nP-value = %.5f\n', p);
